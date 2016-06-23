@@ -1,0 +1,16 @@
+<h1>Edit your profile</h1>
+<form action="/users/<%= @user[0].id %>" method="post">
+	<input type="hidden" name="_method" value="patch">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<p>First Name: <input name="user[first_name]" value="<%= @user[0].first_name %>"></p>
+	<p>Last Name: <input name="user[last_name]" value="<%= @user[0].last_name %>"></p>
+	<p>Email: <input type="email" name="user[email]" value="<%= @user[0].email %>"></p>
+	<p>Location: <input name="location[city]" value="<%= @user[0].city %>">
+		<select name="location[state]" value="<%= @user[0].state %>">
+			<option value='WA'>WA</option>
+			<option value='HI'>HI</option>
+			<option value="TX">TX</option>
+		</select>
+	</p>
+	<button>Update Records</button>
+</form>

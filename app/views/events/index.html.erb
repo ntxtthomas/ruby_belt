@@ -1,0 +1,74 @@
+<h2>Welcome <%#= @user[0].first_name %>!</h2>
+
+<h1><%= @users[0].state %></h1>
+
+<a href="/users/<%= session[:user_id] %>/edit">Edit Profile</a>
+<a href="/sessions" data-method="delete">Logout</a>
+
+<h3>Here are some events in your state</h3>
+
+
+<table border="1">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Date</th>
+			<th>Location</th>
+			<th>Host</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @events.each do |event| %>
+			<% if event.state == @users[0].state %>
+				<tr>
+					<td><%= event.name %></td>
+					<td><%= event.event_date %></td>
+					<td><%= event.city %>, <%= event.state %></td>
+					<td><%= event.user.first_name %></td>
+					<td>action this yo</td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+
+<h3>Here are some events in other states</h3>
+
+<table border="1">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Date</th>
+			<th>Location</th>
+			<th>Host</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @events.each do |event| %>
+			<% if event.state != @users[0].state %>
+				<tr>
+					<td><%= event.name %></td>
+					<td><%= event.event_date %></td>
+					<td><%= event.city %>, <%= event.state %></td>
+					<td><%= event.user.first_name %></td>
+					<td>action this yo</td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+
+<form action="/events" method="post">
+<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+<p>Name: <input type="text" name="event[name]"></p>
+<p>Date: <input type="date" name="event[event_date]"></p>
+
+<p>Location: <input name="location[city]"> <select name="location[state]">
+			<option>WA</option>
+			<option>HI</option>
+			<option>TX</option>
+		</select></p>
+<input type="submit" value="Add Event">
+</form>
